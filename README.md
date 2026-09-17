@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.11, Docker Desktop, and Docker Compose. On Windows, use WSL2/Linux for Airflow if native Windows is problematic.
+Python 3.11, Docker Desktop, Docker Compose, and WSL2 with Ubuntu on Windows.
 
 ## Dataset
 
@@ -12,18 +12,23 @@ It has 178 samples and 3 wine cultivar classes. The project uses exactly four fe
 
 The application shows classes as cultivar_1, cultivar_2, cultivar_3.
 
-## Setup
+## Windows
 
-Windows PowerShell:
+WSL2 is Ubuntu running inside Windows.
+
+Install Ubuntu for WSL2 from Windows PowerShell:
 
 ```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+wsl --install -d Ubuntu
 ```
 
-Linux/WSL:
+Open Ubuntu and enter the project:
+
+```bash
+cd /mnt/c/Games/PMLDL/Assignment_1
+```
+
+## Setup
 
 ```bash
 python3.11 -m venv .venv
@@ -34,26 +39,7 @@ pip install -r requirements.txt
 
 ## Airflow
 
-Use the command block that matches your terminal. Bash syntax such as `export` does not work in PowerShell.
-
-Windows PowerShell:
-
-```powershell
-$env:AIRFLOW_HOME = "$PWD\airflow"
-$AIRFLOW_VERSION = "2.10.5"
-$PYTHON_VERSION = "3.11"
-$CONSTRAINT_URL = "https://raw.githubusercontent.com/apache/airflow/constraints-$AIRFLOW_VERSION/constraints-$PYTHON_VERSION.txt"
-pip install "apache-airflow==$AIRFLOW_VERSION" --constraint "$CONSTRAINT_URL"
-airflow db migrate
-airflow standalone
-```
-
-If Airflow fails on native Windows with `No module named 'pwd'`, run it from WSL2/Linux instead.
-
-Linux/WSL:
-
 ```bash
-cd /mnt/c/Games/PMLDL/Assignment_1
 export AIRFLOW_HOME="$(pwd)/airflow"
 AIRFLOW_VERSION=2.10.5
 PYTHON_VERSION=3.11
@@ -67,17 +53,8 @@ Airflow UI is at http://localhost:8080. The standalone command prints the admin 
 
 Use another terminal from the activated environment to unpause and trigger the DAG without waiting five minutes.
 
-PowerShell:
-
-```powershell
-$env:AIRFLOW_HOME = "$PWD\airflow"
-airflow dags unpause wine_pipeline
-airflow dags trigger wine_pipeline
-```
-
-Linux/WSL:
-
 ```bash
+source .venv/bin/activate
 export AIRFLOW_HOME="$(pwd)/airflow"
 airflow dags unpause wine_pipeline
 airflow dags trigger wine_pipeline
@@ -88,6 +65,7 @@ airflow dags trigger wine_pipeline
 Create the data files, train the model, and start both services.
 
 ```bash
+source .venv/bin/activate
 python -m src.data
 python -m src.train
 docker compose up -d --build api app
@@ -96,6 +74,7 @@ docker compose up -d --build api app
 ## MLflow
 
 ```bash
+source .venv/bin/activate
 mlflow ui --backend-store-uri ./mlruns
 ```
 
