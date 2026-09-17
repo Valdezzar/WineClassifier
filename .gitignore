@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/webserver_config.py
+airflow/standalone_admin_password.txt
+mlruns/
+data/processed/
+models/*.joblib
