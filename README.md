@@ -9,7 +9,7 @@ The application shows classes as cultivar_1, cultivar_2, cultivar_3.
 ## Windows PowerShell
 
 ```powershell
-py -m venv .venv
+py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -38,6 +38,11 @@ airflow dags trigger wine_pipeline
 ```powershell
 python -m src.data
 python -m src.train
+```
+
+Start Docker services:
+
+```powershell
 docker compose up -d --build api app
 ```
 
@@ -54,7 +59,7 @@ Streamlit is at http://localhost:8501.
 ## Linux terminal
 
 ```bash
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
@@ -85,6 +90,11 @@ airflow dags trigger wine_pipeline
 source .venv/bin/activate
 python -m src.data
 python -m src.train
+```
+
+Start Docker services:
+
+```bash
 docker compose up -d --build api app
 ```
 
