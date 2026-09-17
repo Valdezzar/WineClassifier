@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.11, Docker Desktop, Docker Compose, and a Linux or WSL terminal for Airflow. On Windows, keep Docker Desktop running and use WSL2 for Airflow.
+Python 3.11, Docker Desktop, and Docker Compose. On Windows, use WSL2/Linux for Airflow if native Windows is problematic.
 
 ## Dataset
 
@@ -34,17 +34,26 @@ pip install -r requirements.txt
 
 ## Airflow
 
-Run Airflow from Linux or a WSL terminal in VS Code. Native Windows PowerShell and Git Bash can fail with `No module named 'pwd'`.
+Use the command block that matches your terminal. Bash syntax such as `export` does not work in PowerShell.
 
-From WSL, enter the project:
+Windows PowerShell:
+
+```powershell
+$env:AIRFLOW_HOME = "$PWD\airflow"
+$AIRFLOW_VERSION = "2.10.5"
+$PYTHON_VERSION = "3.11"
+$CONSTRAINT_URL = "https://raw.githubusercontent.com/apache/airflow/constraints-$AIRFLOW_VERSION/constraints-$PYTHON_VERSION.txt"
+pip install "apache-airflow==$AIRFLOW_VERSION" --constraint "$CONSTRAINT_URL"
+airflow db migrate
+airflow standalone
+```
+
+If Airflow fails on native Windows with `No module named 'pwd'`, run it from WSL2/Linux instead.
+
+Linux/WSL:
 
 ```bash
 cd /mnt/c/Games/PMLDL/Assignment_1
-```
-
-Install Airflow in the same environment with Apache's Python 3.11 constraints.
-
-```bash
 export AIRFLOW_HOME="$(pwd)/airflow"
 AIRFLOW_VERSION=2.10.5
 PYTHON_VERSION=3.11
@@ -58,16 +67,20 @@ Airflow UI is at http://localhost:8080. The standalone command prints the admin 
 
 Use another terminal from the activated environment to unpause and trigger the DAG without waiting five minutes.
 
-```bash
-export AIRFLOW_HOME="$(pwd)/airflow"
+PowerShell:
+
+```powershell
+$env:AIRFLOW_HOME = "$PWD\airflow"
 airflow dags unpause wine_pipeline
 airflow dags trigger wine_pipeline
 ```
 
-PowerShell AIRFLOW_HOME, if needed:
+Linux/WSL:
 
-```powershell
-$env:AIRFLOW_HOME = "$PWD\airflow"
+```bash
+export AIRFLOW_HOME="$(pwd)/airflow"
+airflow dags unpause wine_pipeline
+airflow dags trigger wine_pipeline
 ```
 
 ## Run
