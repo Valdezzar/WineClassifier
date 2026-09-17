@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.11, Docker Desktop, Docker Compose, and a shell that can run Airflow. On Windows, keep Docker Desktop running and use WSL2/Linux for Airflow if native Windows is problematic.
+Python 3.11, Docker Desktop, Docker Compose, and a Linux or WSL terminal for Airflow. On Windows, keep Docker Desktop running and use WSL2 for Airflow.
 
 ## Dataset
 
@@ -33,6 +33,14 @@ pip install -r requirements.txt
 ```
 
 ## Airflow
+
+Run Airflow from Linux or a WSL terminal in VS Code. Native Windows PowerShell and Git Bash can fail with `No module named 'pwd'`.
+
+From WSL, enter the project:
+
+```bash
+cd /mnt/c/Games/PMLDL/Assignment_1
+```
 
 Install Airflow in the same environment with Apache's Python 3.11 constraints.
 
